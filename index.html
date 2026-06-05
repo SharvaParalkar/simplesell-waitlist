@@ -372,6 +372,12 @@
   </div><!-- /.page -->
 
   <script>
+    // ── Fill in your Supabase project details here ──────────────────────────
+    // Find these in: Supabase dashboard → Project Settings → API
+    const SUPABASE_URL      = 'https://bxmxnhecoiqvdreapcdd.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_SlRijxKHD0doZi6SQbFA7Q_aglFo3b2';
+    // ────────────────────────────────────────────────────────────────────────
+
     const form      = document.getElementById('waitlistForm');
     const emailInput = document.getElementById('emailInput');
     const submitBtn = document.getElementById('submitBtn');
@@ -415,22 +421,30 @@
       submitBtn.innerHTML = spinnerHTML;
 
       try {
-        const res = await fetch('/api/waitlist', {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal',
+          },
+          body: JSON.stringify({ email: email.toLowerCase() }),
         });
 
-        const data = await res.json();
-
-        if (data.success) {
+        if (res.ok) {
           submitBtn.innerHTML = successHTML;
           emailInput.value = '';
-          showStatus(data.message || "Thanks for joining! We'll be in touch soon.", 'success');
+          showStatus("Thanks for joining! We'll be in touch soon.", 'success');
         } else {
+          const errorBody = await res.text();
           submitBtn.disabled = false;
           submitBtn.innerHTML = `<span>Join the waitlist</span>`;
-          showStatus(data.error || 'Something went wrong. Please try again.', 'error');
+          if (res.status === 409 || errorBody.includes('23505')) {
+            showStatus('This email is already on the waitlist!', 'error');
+          } else {
+            showStatus('Something went wrong. Please try again.', 'error');
+          }
         }
       } catch (err) {
         submitBtn.disabled = false;
