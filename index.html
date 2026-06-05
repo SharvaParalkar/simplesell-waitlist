@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimpleSell — Join the Waitlist</title>
+  <meta name="description" content="Sell products online for as low as $5 a month. Join the waitlist to be among the first to launch your store." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Brand tokens ── */
+    :root {
+      --rust:    #A55334;
+      --olive:   #6B7D4B;
+      --charcoal:#2C2C2C;
+      --linen:   #F5F0E1;
+      --mustard: #D9A441;
+      --white:   #FFFFFF;
+
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    /* ── Base ── */
+    html, body {
+      height: 100%;
+      background: var(--linen);
+      color: var(--charcoal);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(245, 240, 225, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(165, 83, 52, 0.2);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-text {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--charcoal);
+      letter-spacing: -0.3px;
+    }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .content {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Gus illustration */
+    .gus-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .gus-wrap svg {
+      width: 120px;
+      height: 120px;
+    }
+
+    /* Headline */
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    /* Subheadline */
+    .sub {
+      font-size: 1.2rem;
+      color: rgba(44, 44, 44, 0.7);
+      margin-bottom: 48px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* ── Form ── */
+    .form {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .input-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 540px) {
+      .input-row { flex-direction: column; }
+    }
+
+    .input-wrap {
+      position: relative;
+      flex: 1;
+    }
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: rgba(44, 44, 44, 0.4);
+      pointer-events: none;
+    }
+    .email-input {
+      width: 100%;
+      padding: 16px 16px 16px 48px;
+      background: var(--white);
+      border: 2px solid rgba(44, 44, 44, 0.2);
+      border-radius: 12px;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      color: var(--charcoal);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+    .email-input::placeholder { color: rgba(44, 44, 44, 0.4); }
+    .email-input:focus {
+      border-color: var(--rust);
+      box-shadow: 0 0 0 4px rgba(165, 83, 52, 0.12);
+    }
+    .email-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .submit-btn {
+      padding: 16px 28px;
+      background: var(--rust);
+      color: var(--linen);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      min-width: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(165, 83, 52, 0.25);
+      transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+    }
+    .submit-btn:hover:not(:disabled) {
+      background: #8f4628;
+      box-shadow: 0 6px 20px rgba(165, 83, 52, 0.35);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active:not(:disabled) { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(245, 240, 225, 0.4);
+      border-top-color: var(--linen);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Check icon */
+    .check-icon { width: 20px; height: 20px; }
+
+    /* Status message */
+    .status-msg {
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 2px solid;
+      font-size: 0.92rem;
+      text-align: left;
+      display: none;
+    }
+    .status-msg.visible { display: block; }
+    .status-msg.success {
+      background: rgba(107, 125, 75, 0.1);
+      border-color: rgba(107, 125, 75, 0.35);
+      color: var(--olive);
+    }
+    .status-msg.error {
+      background: rgba(165, 83, 52, 0.08);
+      border-color: rgba(165, 83, 52, 0.3);
+      color: var(--rust);
+    }
+
+    /* ── Trust badges ── */
+    .trust {
+      margin-top: 48px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      font-size: 0.875rem;
+      color: rgba(44, 44, 44, 0.6);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .trust-check {
+      width: 16px;
+      height: 16px;
+      color: var(--olive);
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid rgba(165, 83, 52, 0.2);
+      padding: 24px;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 0.875rem;
+      color: rgba(44, 44, 44, 0.55);
+    }
+
+    /* ── Fade-in animation ── */
+    .fade-in {
+      animation: fadeIn 0.5s ease-out both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <!-- Gus logo (gus.svg inlined) -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="36" height="36" aria-hidden="true">
+          <circle fill="#2b2b3e" cx="64" cy="64" r="64"/>
+          <path fill="#f5f0e1" d="M58.18,104.73c-.58,0-1.04-.46-1.07-1.04-.14-2.55-1.35-6.86-2.67-8.07-.86-.78-5.96-2.15-7.72-2.91-1.13-.49-5.23-2.23-4.05-2.4,6.83-.97,16.8-1.95,22.79-7.22,14.24-12.51,5.6-36.94,8.52-53,1.08-5.92,5.05-7.2,10.31-6.73.52.05.94.48.97,1l.51,7.53c0,.15,0,.3-.05.43-.57,1.42-3.96,2.43-4.7,4.06-4.06,8.97,9.8,28.73,3.27,42.01-4.4,8.94-17.98,11.28-18.85,22.27-.04.51.29.98.79,1.13.99.29,2.72.5,4.41.81,1.29.24,1.12,2.14-.19,2.14h-12.27ZM62.49,95.04l-3.34.42c-.67.08-1.1.77-.89,1.41l1.54,4.58c.28.84,1.42,1.02,1.91.28.86-1.3,1.6-3.76,1.97-5.4.16-.72-.45-1.38-1.19-1.29Z"/>
+          <path fill="#f5f0e1" d="M70.86,61.51c1.61,14.26-8.19,24.55-21.77,26.32-.59.08-.93-.64-.48-1.03l7.72-6.75-1.12-.37c-4.23,2.64-14.59,9.58-19.39,7.22-.31-.15-.22-.57-.03-.81l.46-.36s1.38-.88,1.42-.91l12.21-8.2c-8.78,2.05-16.58,10.84-25.72,7.38-.49-.19-.54-.87-.06-1.1l45.92-21.86c.37-.17.81.07.86.47Z"/>
+          <path fill="#f5f0e1" d="M37.11,72.92l-7.19,3.5c-.29.14-.63.04-.8-.23l-3.22-5.24c-.28-.45.11-1.02.63-.93l10.41,1.74c.59.1.71.9.17,1.17Z"/>
+          <path fill="#f5f0e1" d="M95.14,30.45l-6.85,1.14c-.33.05-.63-.2-.63-.53v-4.57c0-.4.43-.66.79-.48l6.85,3.44c.47.23.36.93-.15,1.01Z"/>
+        </svg>
+        <span class="logo-text">SimpleSell</span>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="content fade-in">
+
+        <!-- Gus peeking illustration (PeakingGus2.svg inlined) -->
+        <div class="gus-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.49 27.71" aria-label="Gus the Goose">
+            <path fill="#a55334" d="M1.58,25.41c.35-.21-.38-2.41-.42-2.99-.33-4.32,2.44-6.44,3.2-10.36.46-2.34.37-4.13,1.64-6.32,3.72-6.4,15.57-6.23,18.9.44,1.24,2.48.97,5.13,1.78,7.65,1.11,3.44,3.16,4.54,2.76,8.87-.05.55-.6,2.08-.55,2.34.06.33.56.5.85.32.71-.44.81-4.17.73-5.01-.21-2.26-1.46-3.84-2.33-5.77-1.16-2.56-.89-5.17-1.82-7.75-3.31-9.12-18.69-9.11-22.02,0-.76,2.08-.64,4.35-1.25,6.41-.42,1.42-1.37,2.61-1.94,3.95-1.13,2.62-1.4,5.49-.24,8.15.12.16.62.14.73.07Z"/>
+            <path fill="#a55334" d="M6.72,9.26c-1.38.25-1.56,3.71-.22,4.29,2.12.9,2.3-4.66.22-4.29Z"/>
+            <path fill="#a55334" d="M23.51,9.26c-1.79.32-1.27,5.5.77,4.17,1.31-.86.84-4.46-.77-4.17Z"/>
+            <path fill="#a55334" d="M1.48,25.44c-.11.07-.61.09-.73-.07-1.16-2.67-.89-5.54.24-8.15.58-1.34,1.52-2.53,1.94-3.95.61-2.06.49-4.32,1.25-6.41,3.34-9.11,18.71-9.12,22.02,0,.94,2.58.67,5.19,1.82,7.75.87,1.93,2.13,3.51,2.33,5.77.08.84-.02,4.57-.73,5.01-.29.18-.79,0-.85-.32-.05-.26.5-1.79.55-2.34.4-4.33-1.65-5.43-2.76-8.87-.81-2.52-.54-5.16-1.78-7.65C21.47-.46,9.62-.62,5.9,5.78c-1.27,2.19-1.18,3.97-1.64,6.32-.77,3.92-3.53,6.03-3.2,10.36.04.58.77,2.78.42,2.99Z"/>
+            <path fill="#a55334" d="M21.97,25.46c-.01-.18.44-.59.44-.59-1.75-.09-2.73,1.61-4.27,2.28-1.73.75-4.27.75-5.99-.04-1.44-.67-2.5-2.35-4.17-2.23,0,0,.36.42.44.59.19.41-.64.82-1.3-.03-.1-.13-.69-1.3-.73-1.55-.3-1.77,1.29-3.08,1.84-4.72.97-2.93.3-6.78,3.08-8.85,2.6-1.93,6.91-1.56,8.86,1.1,1.61,2.2,1.14,5.38,2.08,7.93.59,1.6,2.12,2.84,1.74,4.68-.23,1.09-1.98,2.36-2.03,1.43ZM7.39,23.84c3.33-.2,4.3,2.99,7.88,2.96,3-.03,3.47-1.74,5.62-2.64.84-.35,1.35-.25,2.2-.45.41-.56-.96-2.34-1.24-2.9-2.1-4.25-.16-11.25-7.32-10.66-5.63.47-4.05,6.7-5.79,10.42-.51,1.1-1.63,1.91-1.35,3.29Z"/>
+            <path fill="#a55334" d="M23.41,9.28c1.61-.29,2.08,3.31.77,4.17-2.04,1.34-2.56-3.85-.77-4.17Z"/>
+            <path fill="#a55334" d="M6.62,9.28c2.09-.37,1.9,5.19-.22,4.29-1.34-.57-1.16-4.04.22-4.29Z"/>
+            <path fill="#a55334" d="M17.95,17.09c.16-.01.26.08.35.19.41.55-.17.78-.27,1.22-.12.54.27,1.76-.54,1.67-.98-.11-.5-3,.47-3.08Z"/>
+            <path fill="#a55334" d="M12.35,17.09c1.21-.25,1.56,3.19.42,3.08-.67-.06-.23-.84-.25-1.23-.05-.59-.74-1.32-.32-1.77.03-.03.11-.07.15-.08Z"/>
+          </svg>
+        </div>
+
+        <!-- Headline -->
+        <h1>Pay once, sell online forever.</h1>
+
+        <!-- Subheadline -->
+        <p class="sub">
+          Join the waitlist to be among the first to launch your store when we go live.
+        </p>
+
+        <!-- Email Form -->
+        <form class="form" id="waitlistForm" novalidate>
+          <div class="input-row">
+            <div class="input-wrap">
+              <!-- Mail icon -->
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <input
+                id="emailInput"
+                class="email-input"
+                type="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span id="btnLabel">Join the waitlist</span>
+            </button>
+          </div>
+
+          <!-- Status message -->
+          <div class="status-msg" id="statusMsg" role="alert" aria-live="polite"></div>
+        </form>
+
+        <!-- Trust indicators -->
+        <div class="trust">
+          <div class="trust-item">
+            <svg class="trust-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>No spam, ever</span>
+          </div>
+          <div class="trust-item">
+            <svg class="trust-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Early access when we launch</span>
+          </div>
+          <div class="trust-item">
+            <svg class="trust-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>Special launch pricing</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Powered by SimpleSell &bull; Selling online shouldn't be complicated</p>
+    </footer>
+
+  </div><!-- /.page -->
+
+  <script>
+    const form      = document.getElementById('waitlistForm');
+    const emailInput = document.getElementById('emailInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnLabel  = document.getElementById('btnLabel');
+    const statusMsg = document.getElementById('statusMsg');
+
+    const spinnerHTML = `<div class="spinner"></div><span>Joining...</span>`;
+    const successHTML = `
+      <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+      <span>Joined!</span>`;
+
+    function showStatus(text, type) {
+      statusMsg.textContent = text;
+      statusMsg.className = `status-msg visible ${type}`;
+    }
+    function hideStatus() {
+      statusMsg.className = 'status-msg';
+    }
+
+    emailInput.addEventListener('input', () => {
+      hideStatus();
+      submitBtn.disabled = false;
+      btnLabel.textContent = 'Join the waitlist';
+      submitBtn.innerHTML = `<span id="btnLabel">Join the waitlist</span>`;
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideStatus();
+
+      const email = emailInput.value.trim();
+      if (!email) {
+        showStatus('Please enter your email address.', 'error');
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = spinnerHTML;
+
+      try {
+        const res = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          submitBtn.innerHTML = successHTML;
+          emailInput.value = '';
+          showStatus(data.message || "Thanks for joining! We'll be in touch soon.", 'success');
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>Join the waitlist</span>`;
+          showStatus(data.error || 'Something went wrong. Please try again.', 'error');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Join the waitlist</span>`;
+        showStatus('Network error. Please check your connection and try again.', 'error');
+      }
+    });
+  </script>
+</body>
+</html>
